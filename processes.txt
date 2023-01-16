@@ -1,0 +1,49 @@
+(* species s1 immigrates with rate r *) 
+Immigration[s1_, r_] := 
+Module[{Products = {{s1, x1}}, Reactants = {}, Catalysts = {}, listAll, function}, listAll = {Products, Reactants, Catalysts}; function[x1_] := r;
+{listAll, function}];
+
+
+(* s2 gives birth to s1 with kernel a *) 
+BirthToAnotherType[s1_, s2_, a_] :=
+Module[{Products = {{s1, x1}}, Reactants = {}, Catalysts = {{s2, x2}}, listAll, function},
+listAll = {Products, Reactants, Catalysts}; function[x1_, x2_] := a[x1 - x2];
+{listAll, function}];
+
+
+(* species s2 produces species s1 with kernel b, this is facilitated with by species s3 with kernel a *) 
+BirthToAnotherTypeByFacilitation[s1_, s2_, s3_, a_, b_] :=
+Module[{Products = {{s1, x1}}, Reactants = {}, Catalysts = {{s2, x2}, {s3, x3}}, listAll, function},
+listAll = {Products, Reactants, Catalysts}; function[x1_, x2_, x3_] := a[x3 - x2] b[x2 - x1]; {listAll, function}];
+
+
+(* species s1 dies with rate r*) 
+DensityIndependentDeath[s1_, r_] :=
+Module[{Products = {}, Reactants = {{s1, x1}},
+Catalysts = {}, listAll, function}, listAll = {Products, Reactants, Catalysts};
+function[x1_] := r; {listAll, function}];
+
+
+(* species s1 eliminates species s1(itself) with kernel a*) 
+DeathByCompetition[s1_, a_] := 
+Module[{Products = {}, Reactants = {{s1, x1}}, 
+Catalysts = {{s1, x2}}, listAll, function}, listAll = {Products, Reactants, Catalysts}; function[x1_, x2_] := a[x1 - x2];
+{listAll, function}];
+
+
+(* species s2 kills s1 by kernel a *) 
+DeathByExternalFactor[s1_, s2_, a_] :=
+Module[{Products = {}, Reactants = {{s1, x1}}, Catalysts = {{s2, x2}}, listAll, function},
+listAll = {Products, Reactants, Catalysts}; function[x1_, x2_] := a[x1 - x2];
+{listAll, function}];
+
+
+(* s2 changes into s1 with rate r *) 
+ChangeInType[s1_, s2_, r_] :=
+Module[{Products = {{s1, x2}}, Reactants = {{s2, x2}},
+Catalysts = {}, listAll, function}, listAll = {Products, Reactants, Catalysts};
+function[x2_] := r; {listAll, function}];
+
+
+(* fire s3 burns s2 with the kernel a, s2 turns into s1 *)
+ChangeToAnotherTypeByCombustion[s1_, s2_, s3_, a_] := Module[{Products = {{s1, x2}}, Reactants = {{s2, x2}}, Catalysts = {{s3, x3}}, listAll, function}, listAll = {Products, Reactants, Catalysts}; function[x2_, x3_] := a[x2 - x3]; {listAll, function}];
